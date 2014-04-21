@@ -2,14 +2,14 @@
 <html lang="en" ng-app="myApp">
 <head>
     <meta charset="utf-8">
-    <title>Modern Web Template</title>
+    <title>ContactsX</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <link rel="stylesheet" media='screen' href='@routes.Assets.at("stylesheets/main.css")'>
 </head>
 <body>
-<div class="container-fluid col-md-10 col-md-offset-1">
+
     <!-- Fixed navbar -->
     <header>
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -20,23 +20,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/">Modern Web Template</a>
+                <a class="navbar-brand" href="#/">ContactsX</a>
             </div>
         </div>
     </header>
 
-    <div ng-view></div>
+    <div class="container-fluid col-md-10 col-md-offset-1">
+		<div ng-view></div>
 
-    <div>
-        <footer>
-            <hr/>
-            <div>
-                <span>&copy; YourProjectName.com 2014</span>
-                <span class="pull-right">version : <span app-version></span></span>
-            </div>
-        </footer>
-    </div>
-</div>
+		<div class="row">
+			<footer>
+				<hr/>
+				<div>
+					<span>&copy; ContactsX 2014</span>
+					<span class="pull-right">version : <span app-version></span></span>
+				</div>
+			</footer>
+		</div>
+	</div>
 </body>
 
 <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js' type="text/javascript"></script>

@@ -5,3 +5,13 @@ body {
     padding-bottom: 30px;
     min-width: 970px;
 }
+
+footer {
+	margin-bottom: 20px;
+}
+
+/* to use ng-cloak while keeping freedom of putting angularjs import 
+in header or after the body (it would be advised in header otherwise)*/
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
