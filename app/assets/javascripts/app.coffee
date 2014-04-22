@@ -19,7 +19,8 @@ angular.module('myApp.routeConfig', ['ngRoute'])
                 templateUrl: '/assets/partials/view.html'
             })
             .when('/users/create', {
-                templateUrl: '/assets/partials/create.html'
+                templateUrl: '/assets/partials/detail.html',
+                controller: "CreateUserCtrl as cuc"
             })
             .otherwise({redirectTo: '/'})
 
