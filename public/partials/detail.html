@@ -1,49 +1,56 @@
 <div class="row">
     <!-- When creating users, it uses CreateUserCtrl as cuc -->
+        
         <h1>Create User</h1>
 
-        <form id="CreateUserForm" name="CreateUserForm" class="form-horizontal" role="form"
-              ng-submit="cuc.createUser()">
-            <legend class="sm-col-12">Basic Information</legend>
+        <form id="CreateUserForm" name="DetailUserForm" class="form-horizontal" role="form">
+            <legend>Basic Information</legend>
 
             <div class="form-group">
-                <label id="lbl_firstName" for="firstName" class="col-sm-4 control-label">First Name</label>
+                <label id="lbl_firstName" for="firstName" class="col-md-4 control-label">First Name</label>
 
-                <div class="col-sm-8">
+                <div class="col-md-8">
                     <input type="text" class="form-control" name="firstName" id="firstName" placeholder=""
-                           ng-model="cuc.user.firstName">
+                           data-ng-model="cuc.user.firstName" required>
+                    <span data-ng-show="DetailUserForm.firstName.$error.required" class="help-block">Required</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lbl_lastName" for="lastName" class="col-sm-4 control-label">Last Name</label>
+                <label id="lbl_lastName" for="lastName" class="col-md-4 control-label">Last Name</label>
 
-                <div class="col-sm-8">
+                <div class="col-md-8">
                     <input type="text" class="form-control" name="lastName" id="lastName" placeholder=""
-                           ng-model="cuc.user.lastName">
+                           data-ng-model="cuc.user.lastName" required>
+                    <span data-ng-show="DetailUserForm.lastName.$error.required" class="help-block">Required</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lbl_phoneNumber" for="phoneNumber" class="col-sm-4 control-label" >Phone Number</label>    <!-- is-required="CreateUserForm.phoneNumber" -->
+                <label id="lbl_phoneNumber" for="phoneNumber" class="col-md-4 control-label" >Phone Number</label>    <!-- is-required="DetailUserForm.phoneNumber" -->
 
-                <div class="col-sm-8">
+                <div class="col-md-8">
                     <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="+intPrefix[space]areaCode[space]atLeast6digits"
-                           ng-model="cuc.user.phoneNumber" >  <!-- Verify phone number ng-pattern="/^\+\d+\s\d+\s(?=.{6})\d+$/" -->
-                    <p ng-show="CreateUserForm.phoneNumber.$error.required" class="help-block" style="display: none;" >Required</p>
+                           data-ng-model="cuc.user.phoneNumber" data-ng-pattern="/^\+\d+\s\d+\s(?=.{6})\d+$/" required>  <!-- Verify phone number ng-pattern="/^\+\d+\s\d+\s(?=.{6})\d+$/" -->
+                    <span data-ng-show="DetailUserForm.phoneNumber.$error.required" class="help-block">Required</span>
+                    <span data-ng-show="!DetailUserForm.phoneNumber.$error.required && DetailUserForm.phoneNumber.$invalid" class="help-block">Required format: +intPrefix[space]areaCode[space]atLeast6digits / Example: +39 123 123456</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8 text-right">
+                    <a data-ng-href="/#/" id="btn_cancel" class="btn btn-default">Cancel</a>
+                    
+                    <!-- <button data-ng-click="cuc.createUser()" data-ng-disabled="noChange() || DetailUserForm.$invalid" class="btn btn-primary">Save</button> -->
+                    <button type="submit" data-ng-click="cuc.createUser()" data-ng-disabled="DetailUserForm.$invalid" class="btn btn-primary">Create User</button>
+
+                    <!-- <button data-ng-click="delete()" data-ng-show="celebrity.id.$oid" class="btn btn-danger">Delete</button> -->
+                    <button data-ng-show="cuc.user.id.$oid" class="btn btn-danger">Delete</button>
+
                 </div>
             </div>
 
             <pre>{{ cuc.user | json }}</pre>
-
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-8 text-right">
-                    <a ng-href="/#/" id="btn_cancel" class="btn btn-warning">Cancel</a>
-
-                    <button type="submit" class="btn btn-success" id="btn_create">Create User</button>
-                </div>
-            </div>
-
 
         </form>
     </div>

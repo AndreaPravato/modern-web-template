@@ -22,6 +22,10 @@ angular.module('myApp.routeConfig', ['ngRoute'])
                 templateUrl: '/assets/partials/detail.html',
                 controller: "CreateUserCtrl as cuc"
             })
+            .when("/edit/:id", {
+                templateUrl: "/assets/partials/detail.html",
+                controller: "EditUserCtrl as cuc"
+            }) 
             .otherwise({redirectTo: '/'})
 
 @commonModule = angular.module('myApp.common', [])
