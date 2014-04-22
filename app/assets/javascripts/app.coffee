@@ -19,12 +19,14 @@ angular.module('myApp.routeConfig', ['ngRoute'])
                 templateUrl: '/assets/partials/view.html'
             })
             .when('/users/create', {
-                templateUrl: '/assets/partials/detail.html',
-                controller: "CreateUserCtrl as cuc"
+                controller: "CreateUserCtrl",
+                controllerAs:'detailUc',
+                templateUrl: '/assets/partials/detail.html'
             })
             .when("/edit/:id", {
-                templateUrl: "/assets/partials/detail.html",
-                controller: "EditUserCtrl as cuc"
+                controller: "EditUserCtrl",
+                controllerAs: 'detailUc',
+                templateUrl: '/assets/partials/detail.html'          
             }) 
             .otherwise({redirectTo: '/'})
 

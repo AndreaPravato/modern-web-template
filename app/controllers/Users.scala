@@ -102,4 +102,11 @@ class Users extends Controller with MongoController {
 
   }
 
+  // sends back JSON about a user corresponding to given id 
+  def getUser(id: String) = Action.async {
+    val objectID = new BSONObjectID(id) // from id to BSONObjectID  
+    val futureUser = collection.find(BSONDocument("_id" -> objectID)).one[User]
+    futureUser.map { user => Ok(Json.toJson(user)) }
+  }
+
 }

@@ -22,6 +22,22 @@ class UserService
             )
         deferred.promise
 
+    getUser: (id) ->
+        @$log.debug "getUser()"
+        @$log.debug("Here is the id: #{id}")
+        deferred = @$q.defer()
+
+        @$http.get("/user/#{id}")
+        .success((data, status, headers) =>
+                @$log.info("Successfully retrieved User - status #{status}")
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to retrieve User - status #{status}")
+                deferred.reject(data);
+            )
+        deferred.promise        
+
     createUser: (user) ->
         @$log.debug "createUser #{angular.toJson(user, true)}"
         deferred = @$q.defer()
