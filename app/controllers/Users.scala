@@ -33,8 +33,11 @@ class Users extends Controller with MongoController {
   // Using case classes + Json Writes and Reads //
   // ------------------------------------------ //
 
+  import play.modules.reactivemongo.json.BSONFormats._
+  import reactivemongo.bson.BSONDocument
   import models._
-  import models.JsonFormats._
+  import models.User._
+  import reactivemongo.bson.BSONObjectID
 
   def createUser = Action.async(parse.json) {
     request =>
@@ -45,39 +48,58 @@ class Users extends Controller with MongoController {
      * (insert() takes a JsObject as parameter, or anything that can be
      * turned into a JsObject using a Writes.)
      */
-      request.body.validate[User].map {
-        user =>
-        // `user` is an instance of the case class `models.User`
-          collection.insert(user).map {
-            lastError =>
-              logger.debug(s"Successfully inserted with LastError: $lastError")
-              Created(s"User Created")
-          }
-      }.getOrElse(Future.successful(BadRequest("invalid json")))
-  }
+    
+    //BEFORE it was
+    //     request.body.validate[User].map {
+    //       user =>
+    //       // `user` is an instance of the case class `models.User`
+    //         collection.insert(user).map {
+    //           lastError =>
+    //             logger.debug(s"Successfully inserted with LastError: $lastError")
+    //             Created(s"User Created")
+    //         }
+    //     }.getOrElse(Future.successful(BadRequest("invalid json")))
+    // }
+
+      val phoneNumber = request.body.\("phoneNumber").toString().replace("\"", "")   // if simple number instead, can use .as[Int]
+      val firstName = request.body.\("firstName").toString().replace("\"", "")
+      val lastName = request.body.\("lastName").toString().replace("\"", "")
+      val active = request.body.\("active").as[Boolean]
+      val user = User(Option(BSONObjectID.generate), phoneNumber, firstName, lastName, active) // create the celebrity
+      collection.insert(user).map(
+        _ => Ok(Json.toJson(user)))
+    }
 
   def findUsers = Action.async {
     // let's do our query
     val cursor: Cursor[User] = collection.
-      // find all
-      find(Json.obj("active" -> true)).
-      // sort them by creation date
-      sort(Json.obj("created" -> -1)).
+      find(BSONDocument()).
+      // // find all
+      // find(Json.obj("active" -> true)).
+      // // sort them by creation date
+      // sort(Json.obj("created" -> -1)).
       // perform the query and get a cursor of JsObject
       cursor[User]
 
-    // gather all the JsObjects in a list
-    val futureUsersList: Future[List[User]] = cursor.collect[List]()
+      //BEFORE it was
+      // // gather all the JsObjects in a list
+      // val futureUsersList: Future[List[User]] = cursor.collect[List]()
 
-    // transform the list into a JsArray
-    val futurePersonsJsonArray: Future[JsArray] = futureUsersList.map { users =>
-      Json.arr(users)
-    }
-    // everything's ok! Let's reply with the array
-    futurePersonsJsonArray.map {
-      users =>
-        Ok(users(0))
-    }
+      // // transform the list into a JsArray
+      // val futurePersonsJsonArray: Future[JsArray] = futureUsersList.map { users =>
+      //   Json.arr(users)
+      // }
+      // // everything's ok! Let's reply with the array
+      // futurePersonsJsonArray.map {
+      //   users =>
+      //     Ok(users(0))
+      // }
+
+      // gather all the JsObjects in a list
+      val futureList = cursor.collect[List]() 
+      // Returns the list transformed into a JsArray (by toJson; alternative would be: Json.arr(users))
+      futureList.map { users => Ok(Json.toJson(users)) }  
+
   }
 
 }
