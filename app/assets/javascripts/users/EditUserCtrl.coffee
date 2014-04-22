@@ -43,6 +43,19 @@ class EditUserCtrl
                 @$log.error "Unable to update User: #{error}"
             )
 
+    deleteUser: () ->
+        @$log.debug "deleteUser()"
+        @UserService.deleteUser(@$routeParams.id)
+        .then(
+            (data) =>
+                @$log.debug "Promise returned #{data} User"
+                @user = data
+                @$location.path("/")
+            ,
+            (error) =>
+                @$log.error "Unable to delete User: #{error}"
+            )
+
     # detects editing activity; used to trigger "Save changes" button in detail.html 
     noChange: () ->
         angular.equals @user, @dbContent

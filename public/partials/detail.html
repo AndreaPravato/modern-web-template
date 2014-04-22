@@ -32,7 +32,7 @@
 
                 <div class="col-md-8">
                     <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="+intPrefix[space]areaCode[space]atLeast6digits"
-                           data-ng-model="detailUc.user.phoneNumber" data-ng-pattern="/^\+\d+\s\d+\s(?=.{6})\d+$/" required>  <!-- Verify phone number ng-pattern="/^\+\d+\s\d+\s(?=.{6})\d+$/" -->
+                           data-ng-model="detailUc.user.phoneNumber" data-ng-pattern="/^\+\d+\s\d+\s(?=.{6})\d+$/" required>  
                     <span data-ng-show="DetailUserForm.phoneNumber.$error.required" class="help-block">Required</span>
                     <span data-ng-show="!DetailUserForm.phoneNumber.$error.required && DetailUserForm.phoneNumber.$invalid" class="help-block">Required format: +intPrefix[space]areaCode[space]atLeast6digits / Example: +39 123 123456</span>
                 </div>
@@ -42,14 +42,12 @@
                 <div class="col-md-offset-4 col-md-8 text-right">
                     <a data-ng-href="/#/" id="btn_cancel" class="btn btn-default">Cancel</a>
                     
-                    <!-- <button data-ng-click="detailUc.createUser()" data-ng-disabled="noChange() || DetailUserForm.$invalid" class="btn btn-primary">Save</button> -->
                     <button data-ng-click="detailUc.saveUser()" data-ng-disabled="detailUc.noChange() || DetailUserForm.$invalid" class="btn btn-primary">
                         <span data-ng-show="!detailUc.user._id.$oid">Add new entry</span>
                         <span data-ng-show="detailUc.user._id.$oid">Save the changes</span>
                     </button>
 
-                    <!-- <button data-ng-click="delete()" data-ng-show="celebrity.id.$oid" class="btn btn-danger">Delete</button> -->
-                    <button data-ng-show="detailUc.user._id.$oid" class="btn btn-danger">Delete</button>
+                    <button data-ng-click="detailUc.deleteUser()" data-ng-show="detailUc.user._id.$oid" class="btn btn-danger">Delete</button>
 
                 </div>
             </div>

@@ -130,4 +130,13 @@ class Users extends Controller with MongoController {
     futureUser.map { user => Ok(Json.toJson(user)) }
   }
 
+  // deletes a user corresponding to given id 
+  def deleteUser(id: String) = Action.async {
+    val objectID = new BSONObjectID(id) // from id to BSONObjectID  
+    
+    collection.remove(BSONDocument("_id" -> objectID)).map( // remove the user
+        _ => Ok(Json.obj())).recover { case _ => InternalServerError } // return an empty JSON; recovers from errors if any
+  }
+
+
 }

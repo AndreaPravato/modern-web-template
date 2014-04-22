@@ -13,6 +13,7 @@ GET     /users                      @controllers.Users.findUsers
 POST    /user                       @controllers.Users.createUser
 GET     /user/:id					@controllers.Users.getUser(id: String)
 POST    /user/:id					@controllers.Users.updateUser(id: String)
+DELETE  /user/:id					@controllers.Users.deleteUser(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

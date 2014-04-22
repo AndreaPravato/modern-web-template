@@ -23,8 +23,7 @@ class UserService
         deferred.promise
 
     getUser: (id) ->
-        @$log.debug "getUser()"
-        @$log.debug("Here is the id: #{id}")
+        @$log.debug "getUser(); id: #{id}"
         deferred = @$q.defer()
 
         @$http.get("/user/#{id}")
@@ -36,7 +35,22 @@ class UserService
                 @$log.error("Failed to retrieve User - status #{status}")
                 deferred.reject(data);
             )
-        deferred.promise        
+        deferred.promise     
+
+    deleteUser: (id) ->
+        @$log.debug "deleteUser(); id: #{id}"
+        deferred = @$q.defer()
+
+        @$http.delete("/user/#{id}")
+        .success((data, status, headers) =>
+                @$log.info("Successfully deleted User - status #{status}")
+                deferred.resolve(data)
+            )
+        .error((data, status, headers) =>
+                @$log.error("Failed to delete User - status #{status}")
+                deferred.reject(data);
+            )
+        deferred.promise  
 
     createUser: (user) ->
         @$log.debug "createUser #{angular.toJson(user, true)}"
