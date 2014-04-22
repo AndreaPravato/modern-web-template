@@ -65,10 +65,31 @@ class Users extends Controller with MongoController {
       val firstName = request.body.\("firstName").toString().replace("\"", "")
       val lastName = request.body.\("lastName").toString().replace("\"", "")
       val active = request.body.\("active").as[Boolean]
-      val user = User(Option(BSONObjectID.generate), phoneNumber, firstName, lastName, active) // create the celebrity
+      val user = User(Option(BSONObjectID.generate), phoneNumber, firstName, lastName, active) // create the contact
       collection.insert(user).map(
         _ => Ok(Json.toJson(user)))
-    }
+  }
+
+  def updateUser(id: String) = Action.async(parse.json) {
+    request =>
+      val objectID = new BSONObjectID(id) // from id to BSONObjectID  
+      val phoneNumber = request.body.\("phoneNumber").toString().replace("\"", "")   // if simple number instead, can use .as[Int]
+      val firstName = request.body.\("firstName").toString().replace("\"", "")
+      val lastName = request.body.\("lastName").toString().replace("\"", "")
+      val active = request.body.\("active").as[Boolean]
+      val modifier = BSONDocument( // create the modifier celebrity
+        "$set" -> BSONDocument(
+          "phoneNumber" -> phoneNumber,
+          "firstName" -> firstName,
+          "lastName" -> lastName,
+          "active" -> active
+        )
+      )
+      collection.update(BSONDocument("_id" -> objectID), modifier).map(
+        _ => Ok(Json.toJson(User(Option(objectID), phoneNumber, firstName, lastName, active)))
+      ) 
+      // return the modified user in a JSON
+  }
 
   def findUsers = Action.async {
     // let's do our query

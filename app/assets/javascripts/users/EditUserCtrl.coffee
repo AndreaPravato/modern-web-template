@@ -30,10 +30,9 @@ class EditUserCtrl
         # @user.id.$oid is now populated; this will make the Delete button appear in the detail.html
         # TODO clone user in dbContent instead of making another HTTP call
 
-    createUser: () ->
-        @$log.debug "createUser()"
-        @user.active = true
-        @UserService.createUser(@user)
+    saveUser: () ->
+        @$log.debug "saveUser() ..EditUserCtrl"
+        @UserService.updateUser(@user, @$routeParams.id)
         .then(
             (data) =>
                 @$log.debug "Promise returned #{data} User"
@@ -41,7 +40,7 @@ class EditUserCtrl
                 @$location.path("/")
             ,
             (error) =>
-                @$log.error "Unable to create User: #{error}"
+                @$log.error "Unable to update User: #{error}"
             )
 
     # detects editing activity; used to trigger "Save changes" button in detail.html 

@@ -5,8 +5,8 @@ class CreateUserCtrl
         @$log.debug "constructing CreateUserController"
         @user = {}
 
-    createUser: () ->
-        @$log.debug "createUser()"
+    saveUser: () ->
+        @$log.debug "createUser() ..CreateUserCtrl"
         @user.active = true
         @UserService.createUser(@user)
         .then(
