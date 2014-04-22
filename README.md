@@ -1,9 +1,8 @@
-Modern Web Template
+Phonebook app
 ===========
+> Application that helps collecting lists of contacts (name, surname, phone number). It is built with a modern technology stack. 
 
 **AngularJS - Scala - Play - Guice - PlayReactiveMongo**
-
-A full application stack for a Modern Web application, lets review the components:
 
 * **AngularJS** - client side javascript framework for creating complex MVC applications in Javascript,
 fronted with Twitter bootstrap CSS framework, because well, im not a web designer.
@@ -56,4 +55,4 @@ This should fetch all the dependencies and start a Web Server listening on *loca
 
 ```
 
-Note: This will create a MongoDB Collection for you automatically, a free-be from the Driver! 
+Note: This will create a MongoDB Collection for you automatically 
