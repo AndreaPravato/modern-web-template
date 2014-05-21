@@ -1,6 +1,7 @@
 Phonebook app
 ===========
 > Application that helps collecting lists of contacts (name, surname, phone number). It is built with a modern technology stack. 
+You can test it here: http://phonebookxp.andreapravato.eu.cloudbees.net/
 
 **AngularJS - Scala - Play - Guice - PlayReactiveMongo**
 
